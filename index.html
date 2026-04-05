@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>American Pizza | 2030 Executive Hub</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tomato: '#E63946',
+                        basil: '#2A9D8F',
+                        crust: '#FFB703',
+                        obsidian: '#050505'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .heading-font { font-family: 'Syncopate', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .pizza-card { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .pizza-card:hover { transform: translateY(-15px) scale(1.02); background: rgba(255, 255, 255, 0.05); border-color: #FFB703; }
+        .shimmer { background: linear-gradient(90deg, #E63946, #FFB703); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center glass mt-4 max-w-6xl left-1/2 -translate-x-1/2 rounded-full">
+        <div class="heading-font text-xl font-bold tracking-tighter italic">
+            AMERICAN <span class="text-crust">PIZZA</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+            <a href="#menu" class="hover:text-tomato transition">The Menu</a>
+            <a href="#ai" class="hover:text-tomato transition">AI Sommelier</a>
+            <a href="#" class="hover:text-tomato transition">Tracking</a>
+        </div>
+        <button class="bg-white text-black px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-tomato hover:text-white transition-all">Order Now</button>
+    </nav>
+
+    <header class="h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <h1 class="heading-font text-6xl md:text-[9rem] leading-none mb-6">
+            PURE <br/> <span class="shimmer">CRAFT.</span>
+        </h1>
+        <p class="text-gray-500 max-w-xl text-lg font-light mb-12 italic">
+            "Where NYC tradition meets 2030 Python-driven culinary precision."
+        </p>
+        <a href="#menu" class="bg-tomato px-12 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:scale-110 transition-transform">Explore The Engine</a>
+    </header>
+
+    <section id="menu" class="max-w-7xl mx-auto px-10 py-32">
+        <h2 class="heading-font text-2xl text-crust mb-20 uppercase tracking-widest border-b border-white/10 pb-6">Available Modules (Menu)</h2>
+        <div id="pizza-container" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            </div>
+    </section>
+
+    <section id="ai" class="max-w-4xl mx-auto px-10 py-32">
+        <div class="glass p-12 rounded-[50px] border-tomato/20">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-2 h-2 bg-basil rounded-full animate-ping"></div>
+                <h3 class="heading-font text-xl uppercase italic">AI Flavor Intelligence</h3>
+            </div>
+            <div id="chat-stream" class="h-40 overflow-y-auto text-sm text-gray-400 mb-8 space-y-4">
+                <p>Hello. I am the AP-2030 Agent. I can help you select a pizza based on NYC market trends. What are you craving?</p>
+            </div>
+            <div class="flex gap-4 border-t border-white/5 pt-6">
+                <input type="text" id="ai-input" class="flex-1 bg-transparent border-none py-2 focus:outline-none text-white" placeholder="Describe your taste profile...">
+                <button onclick="askAI()" class="text-tomato font-black uppercase text-xs tracking-widest italic">Process ></button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center text-gray-800 text-[9px] font-bold uppercase tracking-[1em]">
+        American Pizza Corp &copy; 2030 | Distributed via Vercel Global
+    </footer>
+
+    <script>
+        const MENU_DATA = [
+            { id: 1, name: "The Quantum", price: 45, icon: "🍕", type: "Spicy" },
+            { id: 2, name: "Bio-Basil", price: 32, icon: "🌿", type: "Vegan" },
+            { id: 3, name: "Truffle Overdrive", price: 58, icon: "💎", type: "Premium" },
+            { id: 4, name: "Silicon Meat", price: 49, icon: "🍖", type: "Heavy" },
+            { id: 5, name: "Neo-Margherita", price: 29, icon: "🍅", type: "Classic" },
+            { id: 6, name: "Atomic Pepperoni", price: 41, icon: "🔥", type: "Hot" }
+        ];
+
+        function render() {
+            const container = document.getElementById('pizza-container');
+            container.innerHTML = MENU_DATA.map(pizza => `
+                <div class="pizza-card glass p-10 rounded-[40px] flex flex-col items-center">
+                    <div class="text-7xl mb-10">${pizza.icon}</div>
+                    <span class="text-[8px] font-black text-tomato uppercase tracking-widest mb-2">${pizza.type}</span>
+                    <h3 class="heading-font text-lg mb-6">${pizza.name}</h3>
+                    <div class="flex justify-between items-center w-full mt-auto">
+                        <span class="text-xl font-black">$${pizza.price}</span>
+                        <button class="bg-white text-black px-5 py-2 rounded-full font-black text-[9px] uppercase hover:bg-tomato hover:text-white transition">Select</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function askAI() {
+            const input = document.getElementById('ai-input');
+            const stream = document.getElementById('chat-stream');
+            if(!input.value) return;
+
+            stream.innerHTML += `<p class="text-white font-bold">>> ${input.value}</p>`;
+            const q = input.value;
+            input.value = '';
+
+            setTimeout(() => {
+                stream.innerHTML += `<p class="text-basil italic">Analytic result: Based on "${q}", I recommend the 'Quantum Pepperoni' for an optimized experience.</p>`;
+                stream.scrollTop = stream.scrollHeight;
+            }, 600);
+        }
+
+        window.onload = () => {
+            render();
+            gsap.from(".pizza-card", { opacity: 0, scale: 0.8, y: 50, duration: 1, stagger: 0.1, ease: "expo.out" });
+        };
+    </script>
+</body>
+</html>
